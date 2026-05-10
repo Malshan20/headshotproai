@@ -18,6 +18,7 @@ export default async function ContactPage() {
   }
 
   return (
+    
     <Suspense>
       <ContactClient user={user ? { id: user.id, email: user.email!, name: profile?.full_name ?? "" } : null} />
     </Suspense>

@@ -7,6 +7,7 @@ import { Sparkles, Send, Search, MessageSquare, CheckCircle2, Clock, AlertCircle
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { createTicket, lookupTicket, sendTicketMessage } from "@/app/actions/support"
 import { createClient } from "@/lib/supabase/client"
+import Navbar from "../landing/Navbar"
 
 type View = "home" | "new-ticket" | "track-ticket" | "chat"
 
@@ -93,28 +94,7 @@ export default function ContactClient({ user }: { user: UserProp | null }) {
   return (
     <div className="min-h-screen bg-background">
       {/* Navbar */}
-      <nav className="fixed top-0 inset-x-0 z-50 glass border-b border-border">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Sparkles className="w-3.5 h-3.5 text-primary-foreground" />
-            </div>
-            <span className="font-semibold text-sm text-foreground">PortraifyAI</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            {user ? (
-              <Link href="/dashboard" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Dashboard
-              </Link>
-            ) : (
-              <Link href="/auth/login" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Sign in
-              </Link>
-            )}
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div ref={containerRef} className="max-w-2xl mx-auto px-4 pt-28 pb-16">
         {view !== "home" && view !== "chat" && (
