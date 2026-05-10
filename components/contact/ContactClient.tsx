@@ -126,7 +126,28 @@ export default function ContactClient({ user }: { user: UserProp | null }) {
 }
 
 // ── Home ──────────────────────────────────────────────────────────────────────
+const FAQ_ITEMS = [
+  {
+    q: "How do I download my generated headshots?",
+    a: "Go to your Dashboard, find the headshot you want, and click the download icon. All generated images are stored in your account and available for download at any time.",
+  },
+  {
+    q: "Can I change my subscription plan?",
+    a: "Yes. Visit the Billing page from your dashboard to upgrade or change your plan. Changes take effect immediately and your credits are updated accordingly.",
+  },
+  {
+    q: "How many photos do I need to upload?",
+    a: "You only need to upload one clear photo of yourself. For best results, use a well-lit, front-facing photo where your face is clearly visible.",
+  },
+  {
+    q: "Is my data and photos kept private?",
+    a: "Yes. Your uploaded photos and generated headshots are stored securely and are only accessible to you. We do not share, sell, or use your images for training. See our Privacy Policy for full details.",
+  },
+]
+
 function HomeView({ setView }: { setView: (v: View) => void }) {
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+
   return (
     <div className="space-y-8">
       <div className="text-center space-y-3">
@@ -173,21 +194,26 @@ function HomeView({ setView }: { setView: (v: View) => void }) {
 
       <div className="rounded-2xl border border-border bg-card p-5">
         <h3 className="font-medium text-foreground mb-3 text-sm">Common Questions</h3>
-        <div className="space-y-2">
-          {[
-            "How do I download my generated headshots?",
-            "Can I change my subscription plan?",
-            "How many photos do I need to upload?",
-            "Is my data and photos kept private?",
-          ].map((q) => (
-            <button
-              key={q}
-              onClick={() => {}}
-              className="w-full text-left text-sm text-muted-foreground hover:text-foreground flex items-center justify-between py-2 border-b border-border last:border-0 transition-colors"
-            >
-              {q}
-              <ChevronRight className="w-3.5 h-3.5 shrink-0 ml-2" />
-            </button>
+        <div className="divide-y divide-border">
+          {FAQ_ITEMS.map((item, i) => (
+            <div key={i}>
+              <button
+                onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                className="w-full text-left text-sm text-foreground flex items-center justify-between py-3 gap-3 hover:text-primary transition-colors"
+              >
+                <span>{item.q}</span>
+                <ChevronRight
+                  className={`w-3.5 h-3.5 shrink-0 transition-transform duration-200 ${
+                    openFaq === i ? "rotate-90 text-primary" : "text-muted-foreground"
+                  }`}
+                />
+              </button>
+              {openFaq === i && (
+                <p className="text-sm text-muted-foreground pb-3 leading-relaxed">
+                  {item.a}
+                </p>
+              )}
+            </div>
           ))}
         </div>
       </div>
